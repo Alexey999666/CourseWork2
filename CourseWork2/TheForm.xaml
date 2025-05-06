@@ -1,0 +1,73 @@
+﻿<Window x:Class="CourseWork2.TheForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWork2"
+        mc:Ignorable="d"
+       Title="TheForm" Height="450" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded" x:Name="TheFormBlank">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="139*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+
+            <TextBlock Margin="5,5,5,0"  Foreground="Red" FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Заказ" TextWrapping="Wrap"   />
+            <!--<TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbNumber"  Text="{Binding Path=НомерЗаказа}" />-->
+            <ComboBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" x:Name="cbNumber" VerticalAlignment="Center" SelectedItem="{Binding Path=НомерЗаказаNavigation}" />
+
+            <TextBlock Margin="5,5,5,0"   Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Название экспоната" TextWrapping="Wrap"   />
+            <TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbTitle" Text="{Binding Path=НазваниеЭкспоната}" />
+
+
+            <TextBlock Margin="5,5,5,0"  Background="Transparent" Foreground="Red" FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Тематика" TextWrapping="Wrap"   />
+            <ComboBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" x:Name="cbTema" VerticalAlignment="Center" SelectedItem="{Binding Path=КодВыставкиNavigation}" />
+
+
+            <TextBlock Margin="5,5,5,0"  Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Способ получения" TextWrapping="Wrap"   />
+            <ComboBox Name="cbMethodReceipt" SelectedItem="{Binding Path=КодПоставкиNavigation.СпособПолучения}" Margin="5" Background="Transparent" Foreground="Red" >
+                <ComboBoxItem Content="Покупка" Background="Transparent" Foreground="Red"/>
+                <ComboBoxItem Content="Аренда" Background="Transparent" Foreground="Red"/>
+                <ComboBoxItem Content="Дарение" Background="Transparent" Foreground="Red"/>
+
+
+
+            </ComboBox>
+
+            <TextBlock Margin="5,5,5,0"   Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Стоимость экспоната" TextWrapping="Wrap"   />
+            <TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbCoust" Text="{Binding Path=Стоимость}" />
+
+
+
+
+            <TextBlock Margin="5,5,5,0"  Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Подлинность" TextWrapping="Wrap"   />
+            <ComboBox Name="cbAuthenticity" Text="{Binding Path=Подлиность}" Margin="5" Background="Transparent" Foreground="Red" >
+                <ComboBoxItem Content="Оригинал" Background="Transparent" Foreground="Red"/>
+                <ComboBoxItem Content="Копия" Background="Transparent" Foreground="Red"/>
+
+
+
+            </ComboBox>
+
+
+
+
+
+
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" >
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="120,0,130,0">
+                <Button Content="Добавить" Width="100" Height="30"  x:Name="btnFormAdd"  Click="btnFormAdd_Click" Background="Transparent" Foreground="red"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Width="100" Height="30" Content="Отмена"  Click="btnCancel_Click" Background="Transparent" Foreground="Red"/>
+            </StackPanel>
+
+
+        </StackPanel>
+    </Grid>
+</Window>
+
