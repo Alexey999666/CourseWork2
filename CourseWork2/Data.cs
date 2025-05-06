@@ -9,8 +9,8 @@ namespace CourseWork2
 {
     public static class Data
     {
+        public static Экскурсии экскурсии;
         public static Экспонат экспонат;
-        //public static Клиенты клиенты;
     }
     public static class Flags
     {

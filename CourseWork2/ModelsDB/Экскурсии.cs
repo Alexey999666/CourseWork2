@@ -13,7 +13,7 @@ public partial class Экскурсии
 
     public int КоличествоЛюдей { get; set; }
 
-    public TimeOnly Продолжительность { get; set; }
+    public int Продолжительность { get; set; }
 
     public decimal Стоимость { get; set; }
 

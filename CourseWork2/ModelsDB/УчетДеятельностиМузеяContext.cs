@@ -79,9 +79,7 @@ public partial class УчетДеятельностиМузеяContext : DbConte
 
             entity.ToTable("Экскурсии");
 
-            entity.Property(e => e.Idэкскурсии)
-                .ValueGeneratedNever()
-                .HasColumnName("IDЭкскурсии");
+            entity.Property(e => e.Idэкскурсии).HasColumnName("IDЭкскурсии");
             entity.Property(e => e.Idсотрудника).HasColumnName("IDСотрудника");
             entity.Property(e => e.Стоимость).HasColumnType("money");
 

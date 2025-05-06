@@ -24,26 +24,29 @@ namespace CourseWork2
         public TheForm()
         {
             InitializeComponent();
+            
         }
 
 
 
         УчетДеятельностиМузеяContext _db = new УчетДеятельностиМузеяContext();
-        Экспонат _экспонат;
+        Экскурсии _экскурсии;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
             cbTema.ItemsSource = _db.Выставкаs.ToList();
             cbTema.DisplayMemberPath = "Тематика";
-            //cbMethodReceipt.ItemsSource = _db.Поставкиs.ToList();
-            //cbMethodReceipt.DisplayMemberPath = "СпособПолучения";
-
+            cbEmployee.ItemsSource = _db.Сотрудникиs.Where(s => s.Должность == "Экскурсовод").ToList();
+            cbEmployee.DisplayMemberPath = "Фамилия";
+            
 
             if (Flags.FlagADD == true)
             {
                 TheFormBlank.Title = "Добавить запись";
                 btnFormAdd.Content = "Добавить";
                 btnFormAdd.Visibility = Visibility.Visible;
-                _экспонат = new Экспонат();
+                _экскурсии = new Экскурсии();
+               
 
                 Flags.FlagADD = false;
             }
@@ -52,51 +55,69 @@ namespace CourseWork2
                 TheFormBlank.Title = "Изменить запись";
                 btnFormAdd.Content = "Изменить";
                 btnFormAdd.Visibility = Visibility.Visible;
-                _экспонат = _db.Экспонатs.Find(Data.экспонат.ИнвентарныйНомер);
+
+                _экскурсии = _db.Экскурсииs.Find(Data.экскурсии.Idэкскурсии);
+                
                 Flags.FlagEdit = false;
             }
             else
             {
                 TheFormBlank.Title = "Посмотреть запись";
                 btnFormAdd.Visibility = Visibility.Collapsed;
-                _экспонат = _db.Экспонатs.Find(Data.экспонат.ИнвентарныйНомер);
+                cbEmployee.IsEnabled = false;
+                cbTema.IsEnabled = false;
+                tbCoust.IsReadOnly = true;
+                tbDuration.IsReadOnly = true ;
+                tbKol.IsReadOnly = true;
+                _экскурсии = _db.Экскурсииs.Find(Data.экскурсии.Idэкскурсии);
+               
                 Flags.FlagView = false;
             }
-            TheFormBlank.DataContext = _экспонат;
+            TheFormBlank.DataContext = _экскурсии;
         }
 
         private void btnFormAdd_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
-            //if (!int.TryParse(tbNumber.Text, out int N) || N <= 0)
-            //    errors.AppendLine("Ошибка в номере");
-            //if (dpDate.SelectedDate == null || dpDate.SelectedDate.Value == default(DateTime))
-            //    errors.AppendLine("Заполните корректную дату");
-            //else if (dpDate.SelectedDate.Value > DateTime.Now)
-            //    errors.AppendLine("Дата не может быть в будущем");
-            //if (string.IsNullOrWhiteSpace(cbNumber.Text))
-            //    errors.AppendLine("Заполните заказ");
-            //if (string.IsNullOrWhiteSpace(cbKod.Text))
-            //    errors.AppendLine("Заполните услугу");
-            //tbCoust.Text = tbCoust.Text.Replace(".", ",");
-            //if (!double.TryParse(tbCoust.Text, out double D) || D <= 0)
-            //    errors.AppendLine("Ошибка в цене");
-            //if (string.IsNullOrWhiteSpace(cbFormBuy.Text))
-            //    errors.AppendLine("Заполните форму оплаты");
+            
+            
+
+
+
+            if (cbTema.SelectedItem == null)
+                errors.AppendLine("Выберите выставку");
+
+            if (cbEmployee.SelectedItem == null)
+                errors.AppendLine("Выберите сотрудника");
+            
+
+            if (!int.TryParse(tbKol.Text, out int K) || K <= 0)
+                errors.AppendLine("Ошибка в количестве людей");
+            if (!int.TryParse(tbDuration.Text, out int D) || D <= 0)
+                errors.AppendLine("Ошибка в продолжительности");
+
+
+            tbCoust.Text = tbCoust.Text.Replace(".", ",");
+                if (!double.TryParse(tbCoust.Text, out double C) || C <= 0)
+                    errors.AppendLine("Укажите корректную стоимость");
+            
+
+       
+
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString()); return;
             }
             try
             {
-                if (Data.экспонат == null)
+                if (Data.экскурсии == null)
                 {
-                    _db.Экспонатs.Add(_экспонат);
+                    _db.Экскурсииs.Add(_экскурсии);
                     _db.SaveChanges();
                 }
                 else
                 {
-                    _db.Entry(_экспонат).State = EntityState.Modified;
+                    _db.Entry(_экскурсии).State = EntityState.Modified;
                     _db.SaveChanges();
                 }
                 MessageBox.Show("Информация сохранена");
@@ -104,7 +125,7 @@ namespace CourseWork2
             }
             catch (Exception ex)
             {
-                _db.Экспонатs.Remove(_экспонат);
+                _db.Экскурсииs.Remove(_экскурсии);
                 MessageBox.Show(ex.Message.ToString());
             }
 
@@ -114,5 +135,7 @@ namespace CourseWork2
         {
             this.Close();
         }
+
+        
     }
 }

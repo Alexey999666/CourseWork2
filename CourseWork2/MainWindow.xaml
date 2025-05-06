@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork2"
         mc:Ignorable="d"
-               Title="MainWindow"  x:Name="mainWindow" Height="800" Width="1100" Loaded="Windows_Loaded" WindowStartupLocation="CenterScreen"  >
+       Title="Экскурсии"  x:Name="mainWindow" Height="900" Width="1100" Loaded="Windows_Loaded" WindowStartupLocation="CenterScreen"  >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="488*"/>
-            <RowDefinition Height="259*"/>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="423*"/>
+            <RowDefinition Height="438*"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="0" VerticalAlignment="Top" Background="#03261C" Foreground="#388AC8"  BorderBrush="#1533AD" Grid.ColumnSpan="2" >
+        <Menu Grid.Row="0" VerticalAlignment="Top" Background="#03261C" Foreground="#388AC8"  BorderBrush="#1533AD" Grid.ColumnSpan="2" Height="18" >
             <MenuItem Header="Файл" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD">
                 <MenuItem Header="Выйти" Click="btnExit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
             </MenuItem>
@@ -35,43 +35,54 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="DGDataBase" Grid.Row="1" IsReadOnly="True"  AutoGenerateColumns="False" Foreground="#FF6F00" HeadersVisibility="Column" GridLinesVisibility="All" RowBackground="#8403E7"  AlternatingRowBackground="#E7003E" HorizontalGridLinesBrush="#00D7FF"  VerticalGridLinesBrush="#FFEB40" >
+        <DataGrid x:Name="DGDataBase" Grid.Column="0" IsReadOnly="True"  AutoGenerateColumns="False" CanUserAddRows="False"   HeadersVisibility="Column" GridLinesVisibility="All" Grid.ColumnSpan="2" Margin="0,23,244,0" Grid.RowSpan="2"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ИнвентарныйНомер}" Header="Номер экстпоната" x:Name="dgtcNum" />
-                <DataGridTextColumn Binding="{Binding НазваниеЭкспоната}" Header="Название" />
-                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.Тематика}" Header="Название" />
-                <DataGridTextColumn Binding="{Binding КодПоставкиNavigation.СпособПолучения}" Header="Стоимость заказа"  x:Name="dgtСreceiving"/>
+                <DataGridTextColumn Binding="{Binding Idэкскурсии}" Header="Номер экскурсии" x:Name="dgtcNum" />
+                <DataGridTextColumn Binding="{Binding IdсотрудникаNavigation.Фамилия}" Header="Экскурсовод" />
+                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.Тематика}" Header="Выставка" />
+                <DataGridTextColumn Binding="{Binding КоличествоЛюдей}" Header="Количество людей" />
+                <DataGridTextColumn Binding="{Binding Продолжительность, StringFormat={}{0} Мин.   }" Header="Продолжительность"  x:Name="dgtСreceiving"/>
                 <DataGridTextColumn Binding="{Binding Стоимость}" Header="Стоимость" x:Name="dgtcCost" />
-                <DataGridTextColumn Binding="{Binding Подлиность}" Header="Телефон" x:Name="dgtcAuthenticity"/>
+
             </DataGrid.Columns>
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="	#F83EAB"/>
-                    <Setter Property="Foreground" Value="#1B0297"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#A020F0" Offset="0.0" />
 
-                    <GradientStop Color="#800080" Offset="0.5" />
 
-                    <GradientStop Color="#483D8B" Offset="1.0" />
-
-                </LinearGradientBrush>
-            </DataGrid.Background>
         </DataGrid>
+        <DataGrid x:Name="DGExp" Grid.Row="2" Grid.Column="0"  IsReadOnly="True"   AutoGenerateColumns="False" CanUserAddRows="False"   HeadersVisibility="Column" GridLinesVisibility="All" Grid.ColumnSpan="2" Margin="0,13,244,0"  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding ИнвентарныйНомер}" Header="Номер экспоната" />
+                <DataGridTextColumn Binding="{Binding НазваниеЭкспоната}" Header="Название экспоната" />
+                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.КодВыставки}" Header="Выставка" />
 
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1"  >
-            <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20" Content="Добавить запись" x:Name="btnADD" Click="btnAddEntry_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
-            <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20" Content="Редактировать запись" x:Name="btnEdit" Click="btnEdit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+                <DataGridTextColumn Binding="{Binding Стоимость}" Header="Стоимость" />
+                <DataGridTextColumn Binding="{Binding Подлиность }" Header="Продолжительность"  />
 
-            <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20" Content="Удалить запись" x:Name="btnDelete" Click="btnDelete_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
-            <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20" Content="Посмотреть" x:Name="btnView" Click="btnView_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
-        </StackPanel>
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+        <Expander Header="Список функций" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsExpanded="True" >
+            <StackPanel Orientation="Vertical"   >
+                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Добавить запись" x:Name="btnADD" Click="btnAddEntry_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Редактировать запись" x:Name="btnEdit" Click="btnEdit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+
+                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Удалить запись" x:Name="btnDelete" Click="btnDelete_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Посмотреть" x:Name="btnView" Click="btnView_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+            </StackPanel>
+        </Expander>
+
+        <Expander Header="Фильтр экспонатов" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" IsExpanded="False" Grid.Row="2" Grid.Column="1"  >
+            <StackPanel>
+                <TextBox x:Name="tbFilt" Margin="20,30,10,20 " HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top"  Height="40" Width="150"/>
+                <Button Content="Поиск" Click="btnFilt_Click"  Margin="20" Height="25" Width="150" HorizontalAlignment="Left"   VerticalAlignment="Top"  />
+                <Button Content="Очистить" Click="btnClear_Click" Margin="20" Height="25" Width="150" HorizontalAlignment="Left"   VerticalAlignment="Top"  />
+            </StackPanel>
+
+        </Expander>
+
     </Grid>
 </Window>
 

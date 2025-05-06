@@ -1,5 +1,6 @@
 ﻿using CourseWork2.ModelsDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,14 +49,14 @@ namespace CourseWork2
             {
                
                 int selectIndex = DGDataBase.SelectedIndex;
-                //int selectIndexCl = DGclient.SelectedIndex;
+                int selectIndexCl = DGExp.SelectedIndex;
                 _db.Выставкаs.Load();
                 _db.Поставкиs.Load();
                 _db.Сотрудникиs.Load();
-                _db.Экскурсииs.Load();
+                _db.Экспонатs.Load();
 
-                DGDataBase.ItemsSource = _db.Экспонатs.ToList();
-                //DGclient.ItemsSource = _db.Клиентыs.ToList();
+                DGDataBase.ItemsSource = _db.Экскурсииs.ToList();
+                DGExp.ItemsSource = _db.Экспонатs.ToList();
 
                 if (selectIndex != -1)
                 {
@@ -63,12 +64,12 @@ namespace CourseWork2
                     DGDataBase.SelectedIndex = selectIndex;
                     DGDataBase.ScrollIntoView(DGDataBase.SelectedItem);
                 }
-                //if (selectIndexCl != -1)
-                //{
-                //    if (selectIndexCl >= DGclient.Items.Count) selectIndexCl = DGclient.Items.Count - 1;
-                //    DGclient.SelectedIndex = selectIndexCl;
-                //    DGclient.ScrollIntoView(DGclient.SelectedItem);
-                //}
+                if (selectIndexCl != -1)
+                {
+                    if (selectIndexCl >= DGExp.Items.Count) selectIndexCl = DGExp.Items.Count - 1;
+                    DGExp.SelectedIndex = selectIndexCl;
+                    DGExp.ScrollIntoView(DGExp.SelectedItem);
+                }
                 DGDataBase.Focus();
             }
         }
@@ -76,7 +77,7 @@ namespace CourseWork2
         private void btnAddEntry_Click(object sender, RoutedEventArgs e)
         {
             Flags.FlagADD = true;
-            Data.экспонат = null;
+            Data.экскурсии = null;
             TheForm f = new TheForm();
             f.Owner = this;
             f.ShowDialog();
@@ -88,7 +89,8 @@ namespace CourseWork2
             if (DGDataBase.SelectedItem != null)
             {
                 Flags.FlagEdit = true;
-                Data.экспонат = (Экспонат)DGDataBase.SelectedItem;
+                Data.экскурсии = (Экскурсии)DGDataBase.SelectedItem;
+                
                 TheForm f = new TheForm();
                 f.Owner = this;
                 f.ShowDialog();
@@ -102,13 +104,13 @@ namespace CourseWork2
             {
                 try
                 {
-                    Экспонат row = (Экспонат)DGDataBase.SelectedItem;
+                    Экскурсии row = (Экскурсии)DGDataBase.SelectedItem;
 
                     if (row != null)
                     {
                         using (УчетДеятельностиМузеяContext _db = new УчетДеятельностиМузеяContext())
                         {
-                            _db.Экспонатs.Remove(row);
+                            _db.Экскурсииs.Remove(row);
                             _db.SaveChanges();
                         }
                         LoudDataBaseDG();
@@ -128,12 +130,38 @@ namespace CourseWork2
             if (DGDataBase.SelectedItem != null)
             {
                 Flags.FlagView = true;
-                Data.экспонат = (Экспонат)DGDataBase.SelectedItem;
+                Data.экскурсии = (Экскурсии)DGDataBase.SelectedItem;
                 TheForm f = new TheForm();
                 f.Owner = this;
                 f.ShowDialog();
                 LoudDataBaseDG();
             }
+        }
+
+        
+
+        private void btnFilt_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbFilt.Text.IsNullOrEmpty() == false)
+            {
+                using (УчетДеятельностиМузеяContext _db = new УчетДеятельностиМузеяContext())
+                {
+                    _db.Выставкаs.Load();
+                    _db.Поставкиs.Load();
+                    var filtered = _db.Экспонатs.Where(p => p.КодВыставкиNavigation.Тематика.Contains(tbFilt.Text));
+
+                    DGExp.ItemsSource = filtered.ToList();
+                }
+            }
+            else
+            {
+                LoudDataBaseDG();
+            }
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            tbFilt.Clear();
         }
     }
 }
