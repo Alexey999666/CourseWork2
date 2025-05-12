@@ -15,6 +15,16 @@ public partial class УчетДеятельностиМузеяContext : DbConte
     {
     }
 
+    public virtual DbSet<ExhibitionManyExhibitsAndHighOrAverageAttendance> ExhibitionManyExhibitsAndHighOrAverageAttendances { get; set; }
+
+    public virtual DbSet<ExhibitsAndExhibitionsByAttendance> ExhibitsAndExhibitionsByAttendances { get; set; }
+
+    public virtual DbSet<GuidedtoursByCostAndDuration> GuidedtoursByCostAndDurations { get; set; }
+
+    public virtual DbSet<InformationExhibitByName> InformationExhibitByNames { get; set; }
+
+    public virtual DbSet<SuppliesPurchasesWithHighWorkExperience> SuppliesPurchasesWithHighWorkExperiences { get; set; }
+
     public virtual DbSet<Выставка> Выставкаs { get; set; }
 
     public virtual DbSet<Поставки> Поставкиs { get; set; }
@@ -31,6 +41,62 @@ public partial class УчетДеятельностиМузеяContext : DbConte
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ExhibitionManyExhibitsAndHighOrAverageAttendance>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("ExhibitionManyExhibitsAndHighOrAverageAttendance");
+
+            entity.Property(e => e.Тематика).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<ExhibitsAndExhibitionsByAttendance>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("ExhibitsAndExhibitionsByAttendance");
+
+            entity.Property(e => e.ДатаНачала).HasColumnType("datetime");
+            entity.Property(e => e.ДатаОкончания).HasColumnType("datetime");
+            entity.Property(e => e.НазваниеЭкспоната).HasMaxLength(50);
+            entity.Property(e => e.Тематика).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<GuidedtoursByCostAndDuration>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("GuidedtoursByCostAndDuration");
+
+            entity.Property(e => e.Idсотрудника).HasColumnName("IDСотрудника");
+            entity.Property(e => e.Idэкскурсии)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("IDЭкскурсии");
+            entity.Property(e => e.Стоимость).HasColumnType("money");
+        });
+
+        modelBuilder.Entity<InformationExhibitByName>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("InformationExhibitByName");
+
+            entity.Property(e => e.ИнвентарныйНомер).ValueGeneratedOnAdd();
+            entity.Property(e => e.НазваниеЭкспоната).HasMaxLength(50);
+            entity.Property(e => e.Подлиность).HasMaxLength(50);
+            entity.Property(e => e.Стоимость).HasColumnType("money");
+        });
+
+        modelBuilder.Entity<SuppliesPurchasesWithHighWorkExperience>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("SuppliesPurchasesWithHighWorkExperience");
+
+            entity.Property(e => e.ДатаПоставки).HasColumnType("datetime");
+            entity.Property(e => e.СпособПолучения).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Выставка>(entity =>
         {
             entity.HasKey(e => e.КодВыставки);
@@ -62,11 +128,9 @@ public partial class УчетДеятельностиМузеяContext : DbConte
 
         modelBuilder.Entity<Сотрудники>(entity =>
         {
-            entity.ToTable("Сотрудники");
+            entity.ToTable("Сотрудники", tb => tb.HasTrigger("trg_CorrectWorkExperience"));
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Должность).HasMaxLength(50);
             entity.Property(e => e.Имя).HasMaxLength(50);
             entity.Property(e => e.Отчество).HasMaxLength(50);
@@ -77,7 +141,7 @@ public partial class УчетДеятельностиМузеяContext : DbConte
         {
             entity.HasKey(e => e.Idэкскурсии);
 
-            entity.ToTable("Экскурсии");
+            entity.ToTable("Экскурсии", tb => tb.HasTrigger("trg_CheckTourSizeInt"));
 
             entity.Property(e => e.Idэкскурсии).HasColumnName("IDЭкскурсии");
             entity.Property(e => e.Idсотрудника).HasColumnName("IDСотрудника");
@@ -98,7 +162,7 @@ public partial class УчетДеятельностиМузеяContext : DbConte
         {
             entity.HasKey(e => e.ИнвентарныйНомер);
 
-            entity.ToTable("Экспонат");
+            entity.ToTable("Экспонат", tb => tb.HasTrigger("trg_CheckExhibitUnique"));
 
             entity.Property(e => e.НазваниеЭкспоната).HasMaxLength(50);
             entity.Property(e => e.Подлиность).HasMaxLength(50);
