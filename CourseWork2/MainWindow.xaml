@@ -5,84 +5,181 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork2"
         mc:Ignorable="d"
-       Title="Экскурсии"  x:Name="mainWindow" Height="900" Width="1100" Loaded="Windows_Loaded" WindowStartupLocation="CenterScreen"  >
+        Title="Система управления экскурсиями" 
+        x:Name="mainWindow" 
+        Height="900" 
+        Width="1200" 
+        Loaded="Windows_Loaded" 
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI"
+        Background="#FFF0F0F0">
+
+    <Window.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#FFF9F9F9"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#FFEEEEEE"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#FFEEEEEE"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF3A3A3A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5A5A5A"/>
+                    <Setter Property="BorderBrush" Value="#FF5A5A5A"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF2A2A2A"/>
+                    <Setter Property="BorderBrush" Value="#FF2A2A2A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="#FF3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#FF3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+
+        <Style TargetType="Expander">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#FF3A3A3A"/>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="14" FontWeight="SemiBold"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="23*"/>
-            <RowDefinition Height="423*"/>
-            <RowDefinition Height="438*"/>
-
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*" />
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="0" VerticalAlignment="Top" Background="#03261C" Foreground="#388AC8"  BorderBrush="#1533AD" Grid.ColumnSpan="2" Height="18" >
-            <MenuItem Header="Файл" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD">
-                <MenuItem Header="Выйти" Click="btnExit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выйти" Click="btnExit_Click"/>
             </MenuItem>
-            <MenuItem Header="Действия"  Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD">
-                <MenuItem   Header="Добавить запись" Click="btnAddEntry_Click"  Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD" OpacityMask="#FFE61616"/>
-                <MenuItem   Header="Редактировать запись" Click="btnEdit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
-                <MenuItem   Header="Удалить запись" Click="btnDelete_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
-                <MenuItem   Header="Посмотреть запись" Click="btnView_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
-
+            <MenuItem Header="Действия">
+                <MenuItem Header="Добавить запись" Click="btnAddEntry_Click"/>
+                <MenuItem Header="Редактировать запись" Click="btnEdit_Click"/>
+                <MenuItem Header="Удалить запись" Click="btnDelete_Click"/>
+                <MenuItem Header="Посмотреть запись" Click="btnView_Click"/>
             </MenuItem>
-            <MenuItem Header="Справка" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD">
-                <MenuItem Header="О программе" Click="btnInfo_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
-                <MenuItem Header="Разработчик" Click="btnDeveloper_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#1533AD"/>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О программе" Click="btnInfo_Click"/>
+                <MenuItem Header="Разработчик" Click="btnDeveloper_Click"/>
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="DGDataBase" Grid.Column="0" IsReadOnly="True"  AutoGenerateColumns="False" CanUserAddRows="False"   HeadersVisibility="Column" GridLinesVisibility="All" Grid.ColumnSpan="2" Margin="0,23,244,0" Grid.RowSpan="2"  >
+       
+        <DataGrid x:Name="DGDataBase" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Idэкскурсии}" Header="Номер экскурсии" x:Name="dgtcNum" />
-                <DataGridTextColumn Binding="{Binding IdсотрудникаNavigation.Фамилия}" Header="Экскурсовод" />
-                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.Тематика}" Header="Выставка" />
-                <DataGridTextColumn Binding="{Binding КоличествоЛюдей}" Header="Количество людей" />
-                <DataGridTextColumn Binding="{Binding Продолжительность, StringFormat={}{0} Мин.   }" Header="Продолжительность"  x:Name="dgtСreceiving"/>
-                <DataGridTextColumn Binding="{Binding Стоимость}" Header="Стоимость" x:Name="dgtcCost" />
-
+                <DataGridTextColumn Binding="{Binding Idэкскурсии}" Header="Номер экскурсии" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding IdсотрудникаNavigation.Фамилия}" Header="Экскурсовод" Width="*"/>
+                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.Тематика}" Header="Выставка" Width="*"/>
+                <DataGridTextColumn Binding="{Binding КоличествоЛюдей}" Header="Количество людей" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Продолжительность, StringFormat={}{0} мин.}" Header="Продолжительность" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Стоимость, StringFormat={}{0} руб.}" Header="Стоимость" Width="Auto"/>
             </DataGrid.Columns>
-
-
         </DataGrid>
-        <DataGrid x:Name="DGExp" Grid.Row="2" Grid.Column="0"  IsReadOnly="True"   AutoGenerateColumns="False" CanUserAddRows="False"   HeadersVisibility="Column" GridLinesVisibility="All" Grid.ColumnSpan="2" Margin="0,13,244,0"  >
+
+        <DataGrid x:Name="DGExp" Grid.Row="2" Grid.Column="0">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ИнвентарныйНомер}" Header="Номер экспоната" />
-                <DataGridTextColumn Binding="{Binding НазваниеЭкспоната}" Header="Название экспоната" />
-                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.КодВыставки}" Header="Выставка" />
-
-
-                <DataGridTextColumn Binding="{Binding Стоимость}" Header="Стоимость" />
-                <DataGridTextColumn Binding="{Binding Подлиность }" Header="Продолжительность"  />
-
+                <DataGridTextColumn Binding="{Binding ИнвентарныйНомер}" Header="Номер экспоната" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding НазваниеЭкспоната}" Header="Название экспоната" Width="*"/>
+                <DataGridTextColumn Binding="{Binding КодВыставкиNavigation.КодВыставки}" Header="Код выставки" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Стоимость, StringFormat={}{0} руб.}" Header="Стоимость" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Подлиность}" Header="Продолжительность" Width="Auto"/>
             </DataGrid.Columns>
-
-
         </DataGrid>
-        <Expander Header="Список функций" 
-                  HorizontalAlignment="Center" 
-                  VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsExpanded="True" >
-            <StackPanel Orientation="Vertical"   >
-                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Добавить запись" x:Name="btnADD" Click="btnAddEntry_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
-                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Редактировать запись" x:Name="btnEdit" Click="btnEdit_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
 
-                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Удалить запись" x:Name="btnDelete" Click="btnDelete_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
-                <Button Height="30" Width="160" VerticalAlignment="Top" Margin="20,40,20,20" Content="Посмотреть" x:Name="btnView" Click="btnView_Click" Background="#03261C" Foreground="#388AC8" BorderBrush="#FF7DE8E8"/>
+        <Expander Header="Действия" Grid.Row="1" Grid.Column="1" IsExpanded="True">
+            <StackPanel Orientation="Vertical">
+                <Button Content="Добавить запись" Click="btnAddEntry_Click" Margin="10"/>
+                <Button Content="Редактировать запись" Click="btnEdit_Click" Margin="10"/>
+                <Button Content="Удалить запись" Click="btnDelete_Click" Margin="10"/>
+                <Button Content="Посмотреть запись" Click="btnView_Click" Margin="10"/>
             </StackPanel>
         </Expander>
 
-        <Expander Header="Фильтр экспонатов" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" IsExpanded="False" Grid.Row="2" Grid.Column="1"  >
+        <Expander Header="Фильтр экспонатов" Grid.Row="2" Grid.Column="1" IsExpanded="False">
             <StackPanel>
-                <TextBox x:Name="tbFilt" Margin="20,30,10,20 " HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top"  Height="40" Width="150"/>
-                <Button Content="Поиск" Click="btnFilt_Click"  Margin="20" Height="25" Width="150" HorizontalAlignment="Left"   VerticalAlignment="Top"  />
-                <Button Content="Очистить" Click="btnClear_Click" Margin="20" Height="25" Width="150" HorizontalAlignment="Left"   VerticalAlignment="Top"  />
+                <TextBox x:Name="tbFilt" Margin="10" />
+                <Button Content="Поиск" Click="btnFilt_Click" Margin="10"/>
+                <Button Content="Очистить" Click="btnClear_Click" Margin="10"/>
             </StackPanel>
-
         </Expander>
-
     </Grid>
 </Window>
-

@@ -5,66 +5,121 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork2"
         mc:Ignorable="d"
-       Title="TheForm" Height="450" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded" x:Name="TheFormBlank">
+        Title="Форма добавления экскурсии" 
+        Height="500" 
+        Width="600" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanMinimize" 
+        Loaded="Window_Loaded" 
+        x:Name="TheFormBlank"
+        FontFamily="Segoe UI"
+        Background="#FFF0F0F0">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF3A3A3A"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="10,10,10,0"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#FF3A3A3A"/>
+            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="10,0,10,10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#FF3A3A3A"/>
+            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="10,0,10,10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF3A3A3A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5A5A5A"/>
+                    <Setter Property="BorderBrush" Value="#FF5A5A5A"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF2A2A2A"/>
+                    <Setter Property="BorderBrush" Value="#FF2A2A2A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="139*"/>
-            <RowDefinition Height="53*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel>
 
-           
+       
+        <StackPanel Grid.Row="0" Margin="20">
+            <TextBlock Text="Экскурсовод"/>
+            <ComboBox x:Name="cbEmployee" 
+                     SelectedValue="{Binding Path=IdсотрудникаNavigation}"
+                     DisplayMemberPath="Фамилия"/>
 
-           
+            <TextBlock Text="Выставка"/>
+            <ComboBox x:Name="cbTema" 
+                     SelectedItem="{Binding Path=КодВыставкиNavigation}"
+                     DisplayMemberPath="Тематика"/>
 
-            <TextBlock Margin="5,5,5,0"  Background="Transparent" Foreground="Red" FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Экскурсовод" TextWrapping="Wrap"   />
-            <ComboBox 
-x:Name="cbEmployee" 
+            <TextBlock Text="Количество людей"/>
+            <TextBox x:Name="tbKol" 
+                    Text="{Binding Path=КоличествоЛюдей}"/>
 
-SelectedValue="{Binding Path=IdсотрудникаNavigation}"
+            <TextBlock Text="Продолжительность (мин)"/>
+            <TextBox x:Name="tbDuration" 
+                    Text="{Binding Path=Продолжительность}"/>
 
-Margin="5,0,5,5" 
-Background="Transparent" 
-Foreground="Red"/>
-
-            <TextBlock Margin="5,5,5,0"  Background="Transparent" Foreground="Red" FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Выставка" TextWrapping="Wrap"   />
-            <ComboBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" x:Name="cbTema" VerticalAlignment="Center" SelectedItem="{Binding Path=КодВыставкиNavigation}" />
-
-            <TextBlock Margin="5,5,5,0"   Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Количество людей" TextWrapping="Wrap"   />
-            <TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbKol" Text="{Binding Path=КоличествоЛюдей}" />
-
-            <TextBlock Margin="5,5,5,0"   Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Продолжительность" TextWrapping="Wrap"   />
-            <TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbDuration" Text="{Binding Path=Продолжительность}" />
-
-
-            
-
-            <TextBlock Margin="5,5,5,0"   Background="Transparent" Foreground="Red"  FontSize="10" Opacity="1" FontWeight="Black" FontStretch="Condensed" Text="Стоимость экспоната" TextWrapping="Wrap"   />
-            <TextBox Margin="5,0,5,5" Background="Transparent" Foreground="Red" TextWrapping="Wrap" x:Name="tbCoust" Text="{Binding Path=Стоимость}" />
-
-
-
-
-           
-
-
-
-
-
-
-
+            <TextBlock Text="Стоимость (руб)"/>
+            <TextBox x:Name="tbCoust" 
+                    Text="{Binding Path=Стоимость}"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" >
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="130,0,130,0">
-                <Button Content="Добавить" Width="100" Height="30"  x:Name="btnFormAdd"  Click="btnFormAdd_Click" Background="Transparent" Foreground="red"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Width="100" Height="30" Content="Отмена"  Click="btnCancel_Click" Background="Transparent" Foreground="Red"/>
-            </StackPanel>
 
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <Button Content="Добавить" 
+                    x:Name="btnFormAdd"  
+                    Click="btnFormAdd_Click"/>
 
+            <Button Content="Отмена" 
+                    Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>
-

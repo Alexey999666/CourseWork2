@@ -31,7 +31,7 @@ namespace CourseWork2
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Задание 1.Создать таблицы: \r\nТаблица 1. Справочник услуг.\r\nСтруктура таблицы: Код услуги, Наименование, Цена \r\nТаблица 2. Заказы.\r\nСтруктура таблицы: Номер заказа, Дата заказа, Код услуги, Стоимость услуги, Форма \r\nоплаты. Форма оплаты может быть наличными или по безналичному расчету. \r\nТаблица 3. Клиенты.\r\nСтруктура таблицы: Код клиента, Фамилия клиента, Адрес клиента, Телефон (Номер \r\nтелефона должен содержать код города) \r\nТаблица 4. Реестр заказов.\r\nСтруктура таблицы: Номер заказа, Код клиента, Стоимость заказа.\r\nЗадание 2. С помощью SQL-запроса подсчитать стоимость заказов по каждому клиенту. \r\nЗапрос должен содержать поля: Фамилия клиента, Стоимость заказа. \r\nЗадание 3. Составить SQL-запрос, позволяющий просмотреть данные обо всех клиентах, \r\nтелефон которых содержит код города Рязань.", "Задание", MessageBoxButton.OK, MessageBoxImage.Question);
+            MessageBox.Show("Создать базу данных Учёт деятельности музея и приложение к ней в WPF", "Задание", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
         private void btnDeveloper_Click(object sender, RoutedEventArgs e)
@@ -162,6 +162,7 @@ namespace CourseWork2
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             tbFilt.Clear();
+            LoudDataBaseDG();
         }
     }
 }
