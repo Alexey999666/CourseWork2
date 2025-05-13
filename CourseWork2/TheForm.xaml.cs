@@ -26,9 +26,6 @@ namespace CourseWork2
             InitializeComponent();
             
         }
-
-
-
         УчетДеятельностиМузеяContext _db = new УчетДеятельностиМузеяContext();
         Экскурсии _экскурсии;
         private void Window_Loaded(object sender, RoutedEventArgs e)
